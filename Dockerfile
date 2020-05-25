@@ -1,5 +1,7 @@
 FROM alpine:3.11 as base
+
 FROM base as build
+
 ARG mono_version=6.8.0.123
 RUN apk --no-cache add curl
 RUN mkdir /build
@@ -18,4 +20,4 @@ RUN apk --no-cache add libgcc
 COPY --from=build /usr/bin/mono /usr/bin/
 COPY --from=build /usr/lib/libmono-* /usr/lib/
 COPY --from=build /usr/etc/mono/ /usr/etc/mono/
-COPY --from=mono /usr/lib/mono/ /usr/lib/mono/
+COPY --from=build /usr/lib/mono/ /usr/lib/mono/

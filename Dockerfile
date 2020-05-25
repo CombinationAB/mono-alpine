@@ -10,9 +10,10 @@ RUN curl -o /build/mono.tar.xz https://download.mono-project.com/sources/mono/mo
 RUN tar --strip-components=1 -C /build -Jxf /build/mono.tar.xz
 RUN apk --no-cache add gcc g++ make python3 xz bash autoconf automake libtool musl-dev cmake linux-headers
 RUN apk add --no-cache mono --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing
-RUN ./autogen.sh --prefix=/usr --enable-parallel-mark --with-mcs-docs=no --with-sigaltstack=no --disable-mcs-build
+RUN ./autogen.sh --prefix=/usr --enable-parallel-mark --with-mcs-docs=no --with-sigaltstack=no
 RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN make -j16
+RUN apk --no-cache del mono
 RUN make install
 
 FROM base as runtime

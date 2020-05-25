@@ -1,0 +1,34 @@
+name: Docker image
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        mono_version: ["6.8.0.123"]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Docker login
+      run: |
+        echo ${GITHUB_TOKEN} | docker login -u ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
+        echo ${DOCKER_HUB_KEY} | docker login -u cmbdevopsbot --password-stdin
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DOCKER_HUB_KEY: ${{ secrets.DOCKER_HUB_KEY }}
+    - name: Build Docker image
+      run: | 
+        docker build . --file Dockerfile --build-arg mono_version=${{ matrix.mono_version }} --tag docker.pkg.github.com/combinationab/mono-alpine/mono-alpine:${{ matrix.mono_version }}
+        docker tag docker.pkg.github.com/combinationab/mono-alpine/mono-alpine:${{ matrix.mono_version }} combination/mono-alpine:${{ matrix.mono_version }}
+    - name: Push Docker image
+      run: |
+        docker push docker.pkg.github.com/combinationab/mono-alpine/mono-alpine:${{ matrix.mono_version }}
+        docker push combination/mono-alpine:${{ matrix.mono_version }}

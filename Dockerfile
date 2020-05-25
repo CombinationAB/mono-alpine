@@ -1,4 +1,4 @@
-FROM alpine:3.11 as base
+FROM alpine:edge as base
 
 FROM base as build
 

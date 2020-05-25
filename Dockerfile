@@ -1,13 +1,14 @@
 ARG mono_version=6.8.0.96
 FROM mono:${mono_version} as mono
 FROM alpine:3.11 as base
-
 FROM base as build
 ARG mono_version
 RUN apk --no-cache add curl
 RUN mkdir /build
 WORKDIR /build
-RUN curl -o /build/mono.tar.xz https://download.mono-project.com/sources/mono/mono-${mono_version}.tar.x
+ENV mono_version=${mono_version}
+RUN echo "Mono version: ${mono_version}"
+RUN curl -o /build/mono.tar.xz https://download.mono-project.com/sources/mono/mono-${mono_version}.tar.xz
 RUN tar --strip-components=1 -C /build -Jxf /build/mono.tar.xz
 RUN apk --no-cache add gcc g++ make python3 xz bash autoconf automake libtool musl-dev cmake linux-headers
 RUN ./autogen.sh --prefix=/usr --enable-parallel-mark --with-mcs-docs=no --with-sigaltstack=no --disable-mcs-build

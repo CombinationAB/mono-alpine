@@ -1,8 +1,8 @@
+ARG mono_version=6.8.0.96
 FROM alpine:3.11 as base
-ARG mono_version
 
 FROM base as build
-ARG mono_version=6.8.0.96
+ARG mono_version
 RUN apk --no-cache add curl
 RUN mkdir /build
 WORKDIR /build

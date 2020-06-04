@@ -1,5 +1,4 @@
 ARG mono_version=6.8.0.96
-FROM mono:${mono_version} as mono
 FROM alpine:3.11 as base
 FROM base as build
 ARG mono_version

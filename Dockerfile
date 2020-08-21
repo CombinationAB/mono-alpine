@@ -25,7 +25,6 @@ RUN apk --no-cache add libgcc
 COPY --from=build /usr/bin/mono /usr/bin/
 COPY --from=build /usr/bin/mcs /usr/bin/
 COPY --from=build /usr/bin/xbuild /usr/bin/
-COPY --from=build /usr/lib/libmono-* /usr/lib/
-COPY --from=build /usr/lib/libMono-* /usr/lib/
+COPY --from=build /usr/lib/lib?ono-* /usr/lib/
 COPY --from=build /usr/etc/mono/ /usr/etc/mono/
 RUN mono --version

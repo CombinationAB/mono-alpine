@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        mono_version: ["6.4.0.198", "6.6.0.161", "6.8.0.96", "6.10.0.105"]
+        mono_version: ["6.4.0.198", "6.6.0.161", "6.8.0.123", "6.10.0.105", "6.12.0.91"]
 
     steps:
     - uses: actions/checkout@v2

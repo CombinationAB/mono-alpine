@@ -1,4 +1,4 @@
-ARG mono_version=6.8.0.96
+ARG mono_version=6.10.0.105
 FROM alpine:3.11 as base
 FROM base as build
 ARG mono_version
@@ -22,6 +22,7 @@ RUN make install
 FROM base as runtime
 COPY --from=mono /usr/lib/mono/ /usr/lib/mono/
 RUN apk --no-cache add libgcc
+COPY --from=build /usr/bin/cert-sync /usr/bin/
 COPY --from=build /usr/bin/mono /usr/bin/
 COPY --from=build /usr/bin/mcs /usr/bin/
 COPY --from=build /usr/bin/xbuild /usr/bin/

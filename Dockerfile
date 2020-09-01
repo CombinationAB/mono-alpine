@@ -28,4 +28,4 @@ COPY --from=build /usr/bin/mcs /usr/bin/
 COPY --from=build /usr/bin/xbuild /usr/bin/
 COPY --from=build /usr/lib/lib?ono-* /usr/lib/
 COPY --from=build /usr/etc/mono/ /usr/etc/mono/
-RUN mono --version
+RUN cert-sync /etc/ssl/certs/ca-certificates.crt && mono --version

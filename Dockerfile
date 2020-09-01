@@ -21,7 +21,7 @@ RUN make install
 
 FROM base as runtime
 COPY --from=mono /usr/lib/mono/ /usr/lib/mono/
-RUN apk --no-cache add libgcc
+RUN apk --no-cache add libgcc ca-certificates
 COPY --from=build /usr/bin/cert-sync /usr/bin/
 COPY --from=build /usr/bin/mono /usr/bin/
 COPY --from=build /usr/bin/mcs /usr/bin/

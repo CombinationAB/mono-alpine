@@ -20,7 +20,7 @@ RUN sed -i 's/HAVE_DECL_PTHREAD_MUTEXATTR_SETPROTOCOL/0/' mono/utils/mono-os-mut
 RUN make -j16
 RUN make install
 RUN apk del gcc g++ make python3 xz autoconf automake libtool musl-dev cmake linux-headers gdb strace linux-headers curl git bash
-
+RUN rm -rf /usr/local/include && find /usr/local -name \*.a | xargs rm
 
 FROM base as runtime
 COPY --from=build /usr/local/ /usr/local/
